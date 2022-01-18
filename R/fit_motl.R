@@ -6,7 +6,7 @@ fit_motl <- function(X, Y, w,lambda = 1, eta = 1, rho = 1, n_iter = 5)
 ### initialize the variables; what is the best way to do this?
   ### current approach is to compute the initial b via a standard ridge, and generate u randomly
   b <- coef(glmnet::glmnet(x = X, y = Y, lambda = lambda, intercept = FALSE,
-                           standardize = FALSE))[-1]
+                           standardize = FALSE, alpha = 0))[-1]
   z <- b
   u <- rnorm(p)
   for (i in 1:n_iter)
