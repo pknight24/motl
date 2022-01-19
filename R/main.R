@@ -22,7 +22,8 @@ motl <- function(X, Y, w, lambda, eta, cv = TRUE, k = 5, ...)
   if (cv == FALSE)
     return(raw_estimates)
 
-  ## run k fold cross validate to estimate the prediction error, for a given lambda,eta pair
+  ## run k fold cross validate to estimate the prediction error, 
+  ## for a given lambda,eta pair
   get_error <- function(lam, et) {
     random_order <- sample(n, n)
     subsamples <- split(random_order, 1:k)
@@ -36,7 +37,8 @@ motl <- function(X, Y, w, lambda, eta, cv = TRUE, k = 5, ...)
                          lambda = lam, eta = et, ...)) / length(Y.test)
     }))
   }
-  errors <- map(lambda, function(lam) map_dbl(eta, function(et) get_error(lam, et)))
+  errors <- map(lambda, function(lam) 
+   map_dbl(eta, function(et) get_error(lam, et)))
   errors_mat <- matrix(unlist(errors), nrow = length(eta), ncol = length(lambda)) ### rows are etas, columns are lambdas
   errors_mat_t <- t(errors_mat) ## transpose so that lambdas are rows, etas are columns
   rownames(errors_mat_t) <- as.character(lambda)
