@@ -1,3 +1,12 @@
+#' Mixed-outcome transfer learning
+#' @param X An n-by-p design matrix.
+#' @param Y An outcome vector of length n.
+#' @param w An estimated coefficient vector of length p.
+#' @param lambda A vector of positive tuning parameters corresponding to the penalty on the Euclidean norm of beta.
+#' @param eta A vector of positive tuning parameters corresponding to the penalty on the inner product of w and beta.
+#' @param cv Logical, indicates whether to evaluate the cross validation error of the estimator at each pair of tuning parameters (lambda, eta).
+#' @param k Integer, for k-fold cross validation when cv = TRUE.
+#' @return A list of estimated coefficients corresponding to each pair of tuning parameters. If cv = TRUE, also returns the cross-validation error for each pair of tuning parameters in the form of a matrix, as well as the optimal lambda and eta.
 #' @importFrom stats coef
 #' @importFrom glmnet glmnet
 #' @importFrom purrr map map_dbl
@@ -38,7 +47,7 @@ motl <- function(X, Y, w, lambda, eta, cv = TRUE, k = 5, ...)
     }))
   }
   errors <- map(lambda, function(lam) 
-   map_dbl(eta, function(et) get_error(lam, et)))
+    map_dbl(eta, function(et) get_error(lam, et)))
   errors_mat <- matrix(unlist(errors), nrow = length(eta), ncol = length(lambda)) ### rows are etas, columns are lambdas
   errors_mat_t <- t(errors_mat) ## transpose so that lambdas are rows, etas are columns
   rownames(errors_mat_t) <- as.character(lambda)

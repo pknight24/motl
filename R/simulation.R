@@ -1,3 +1,7 @@
+#' Simulate coefficient vectors w and beta according to a multivariate normal distribution
+#' @param p Integer, the length of the vectors.
+#' @param var_vector A vector of length 2, contains the variance of beta and w (in order).
+#' @param rho The correlation between w and beta.
 #' @importFrom MASS mvrnorm
 #' @importFrom stats rnorm
 #' @export
@@ -10,6 +14,11 @@ simulate_coef <- function(p, var_vector = c(0.1, 0.1), rho = 0.75)
   return(list(w = output[,1], beta = output[,2]))
 }
 
+#' Simulate data under a linear model
+#' @param n Integer, number of samples.
+#' @param p Integer, number of features.
+#' @param beta A true coefficient vector of length p.
+#' @param sigma2 Variance of the error term.
 #' @export
 simulate_data <- function(n, p, beta, sigma2 = 0.1){
   X <- matrix(rnorm(n = n*p), nrow = n, ncol = p)
