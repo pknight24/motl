@@ -6,6 +6,7 @@
 #' @param eta A vector of positive tuning parameters corresponding to the penalty on the inner product of w and beta.
 #' @param cv Logical, indicates whether to evaluate the cross validation error of the estimator at each pair of tuning parameters (lambda, eta).
 #' @param k Integer, for k-fold cross validation when cv = TRUE.
+#' @param ... Additional arguments for the fitting function.
 #' @return A list of estimated coefficients corresponding to each pair of tuning parameters. If cv = TRUE, also returns the cross-validation error for each pair of tuning parameters in the form of a matrix, as well as the optimal lambda and eta.
 #' @importFrom stats coef
 #' @importFrom glmnet glmnet

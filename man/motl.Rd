@@ -20,6 +20,8 @@ motl(X, Y, w, lambda, eta, cv = TRUE, k = 5, ...)
 \item{cv}{Logical, indicates whether to evaluate the cross validation error of the estimator at each pair of tuning parameters (lambda, eta).}
 
 \item{k}{Integer, for k-fold cross validation when cv = TRUE.}
+
+\item{...}{Additional arguments for the fitting function.}
 }
 \value{
 A list of estimated coefficients corresponding to each pair of tuning parameters. If cv = TRUE, also returns the cross-validation error for each pair of tuning parameters in the form of a matrix, as well as the optimal lambda and eta.
