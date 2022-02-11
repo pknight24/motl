@@ -4,7 +4,7 @@
 \alias{simulate_data}
 \title{Simulate data under a linear model}
 \usage{
-simulate_data(n, p, beta, sigma2 = 0.1)
+simulate_data(n, p, beta, sigma2 = 0.1, family = "gaussian")
 }
 \arguments{
 \item{n}{Integer, number of samples.}
@@ -13,7 +13,10 @@ simulate_data(n, p, beta, sigma2 = 0.1)
 
 \item{beta}{A true coefficient vector of length p.}
 
-\item{sigma2}{Variance of the error term.}
+\item{sigma2}{Variance of the error term for Gaussian data.}
+
+\item{family}{Distribution of the outcome data, defaults to 'gaussian' for
+continuous data. For binary outcomes, specify 'binomial'.}
 }
 \description{
 Simulate data under a linear model

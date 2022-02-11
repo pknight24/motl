@@ -6,14 +6,18 @@
 #' @param eta A vector of positive tuning parameters corresponding to the penalty on the inner product of w and beta.
 #' @param cv Logical, indicates whether to evaluate the cross validation error of the estimator at each pair of tuning parameters (lambda, eta).
 #' @param k Integer, for k-fold cross validation when cv = TRUE.
+#' @param family String indicating which model to fit: currently supports
+#' 'gaussian' for continuous outcomes and 'binomial' for binary outcomes.
 #' @param ... Additional arguments for the fitting function.
 #' @return A list of estimated coefficients corresponding to each pair of tuning parameters. If cv = TRUE, also returns the cross-validation error for each pair of tuning parameters in the form of a matrix, as well as the optimal lambda and eta.
-#' @importFrom stats coef
+#' @importFrom stats coef optim
 #' @importFrom glmnet glmnet
 #' @importFrom purrr map map_dbl
 #' @export
-motl <- function(X, Y, w, lambda, eta, cv = TRUE, k = 5, ...)
+motl <- function(X, Y, w, lambda, eta, cv = TRUE, k = 5, family = "gaussian",...)
 {
+  ## cross validation for non-continuous data isn't supported yet
+  if (family != "gaussian") cv <- FALSE
   n <- nrow(X)
   p <- ncol(X)
   if (length(lambda) == 1 & length(eta) == 1)
@@ -22,7 +26,7 @@ motl <- function(X, Y, w, lambda, eta, cv = TRUE, k = 5, ...)
   ## here is our output from the double map
   raw_estimates <- map(lambda, function(lam)
     map(eta, function(et)
-      fit_motl(X = X, Y = Y, w = w, eta = et, lambda = lam, ...)))
+      fit_motl(X = X, Y = Y, w = w, eta = et, lambda = lam, family = family, ...)))
 
   names(raw_estimates) <- as.character(lambda)
   raw_estimates <- lapply(raw_estimates, function(x) {

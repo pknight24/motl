@@ -4,7 +4,7 @@
 \alias{motl}
 \title{Mixed-outcome transfer learning}
 \usage{
-motl(X, Y, w, lambda, eta, cv = TRUE, k = 5, ...)
+motl(X, Y, w, lambda, eta, cv = TRUE, k = 5, family = "gaussian", ...)
 }
 \arguments{
 \item{X}{An n-by-p design matrix.}
@@ -20,6 +20,9 @@ motl(X, Y, w, lambda, eta, cv = TRUE, k = 5, ...)
 \item{cv}{Logical, indicates whether to evaluate the cross validation error of the estimator at each pair of tuning parameters (lambda, eta).}
 
 \item{k}{Integer, for k-fold cross validation when cv = TRUE.}
+
+\item{family}{String indicating which model to fit: currently supports
+'gaussian' for continuous outcomes and 'binomial' for binary outcomes.}
 
 \item{...}{Additional arguments for the fitting function.}
 }
